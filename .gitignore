@@ -1,0 +1,5 @@
+# Just getting rid of Eclipse stuff
+/target/
+.project
+.settings
+.classpath
