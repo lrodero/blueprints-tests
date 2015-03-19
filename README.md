@@ -52,12 +52,12 @@ $ cd titan-0.5.2-hadoop2
 $ ./bin/cassandra
 ```
 
-### <a name="orientdb"/>"Setting OrientDB
+### <a name="orientdb"/>Setting and Starting OrientDB
 First we need to download OrientDB, we have used the 1.7.10 version. Go to the [OrientDB download](http://www.orientechnologies.com/download/) webpage and download the version for Linux systems (we recommend version 1.7.10). Then run the following commands:
 ```
 $ tar -zxvf orientdb-community-1.7.10.tar.gz
 $ cd orientdb-community-1.7.10/bin
-$ ./start.sh
+$ ./server.sh
 ```
 
 

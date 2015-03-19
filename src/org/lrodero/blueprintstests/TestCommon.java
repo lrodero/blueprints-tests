@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.Vertex;
 
 public abstract class TestCommon {
@@ -60,6 +61,10 @@ public abstract class TestCommon {
         logger.info(juno.getProperty("name") + " knows the following vertices since 2011 with 5 stars: " + known);
         
         logger.info("Shutting down graph database");
+        
+        if(g instanceof TransactionalGraph)
+            ((TransactionalGraph) g).commit();
+        
         g.shutdown();
     }
     
