@@ -1,3 +1,10 @@
+/*
+ * Copyright Luis Rodero-Merino 2015
+ * 
+ * APACHE LICENSE v2.0
+ * 
+ * Author: Dr. Luis Rodero-Merino (lrodero@acm.org)
+ */
 package org.lrodero.blueprintstests;
 
 import java.io.File;
@@ -71,9 +78,9 @@ public class TestLocal extends TestCommon {
     }
     
     
-    // LOCAL ACCESS TO TITAN //
-    // Access to a graph database through Titan libraries, which will use berkeleydb 
-    // to store data. It does not need a Titan server instance running.
+    /* LOCAL ACCESS TO TITAN 
+       Access to a graph database through Titan libraries, which will use berkeleydb 
+       to store data. It does not need a Titan server instance running. */
     protected static Graph createLocalTitanGraph(File storageDir) {
         logger.info("Creating local Titan database configuration");
         Configuration conf = new BaseConfiguration();
@@ -84,9 +91,9 @@ public class TestLocal extends TestCommon {
     }
     
     
-    // LOCAL ACCESS TO NEO4J //
-    // Access to a graph database through Neo4J libraries. It does not need
-    // a Neo4J server instance running.
+    /* LOCAL ACCESS TO NEO4J 
+       Access to a graph database through Neo4J libraries. It does not need
+       a Neo4J server instance running. */
     protected static Graph createLocalNeo4jGraph(File storageDir) {
         logger.info("Creating local Neo4J database configuration");
         Configuration conf = new BaseConfiguration();
@@ -97,9 +104,9 @@ public class TestLocal extends TestCommon {
     }
 
     
-    // LOCAL ACCESS TO ORIENTDB //
-    // Access to a graph database through OrientDB libraries. It does not need
-    // a OrientDB server instance running.
+    /* LOCAL ACCESS TO ORIENTDB 
+       Access to a graph database through OrientDB libraries. It does not need
+       a OrientDB server instance running. */
     protected static Graph createLocalOrientDBGraph(File storageDir) {
         logger.info("Creating local OrientDB database configuration");
         Configuration conf = new BaseConfiguration();

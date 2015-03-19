@@ -31,7 +31,7 @@ Local.Backend = BERKELEYDB
 
 Then, execute the following command in the shell:
 ```
-$ mvn exec:java -Dexec.mainClass="org.lrodero.blueprintstests.Main"
+$ mvn exec:java
 ``` 
 
 ## Testing Remote Backend Technologies

@@ -1,3 +1,10 @@
+/*
+ * Copyright Luis Rodero-Merino 2015
+ * 
+ * APACHE LICENSE v2.0
+ * 
+ * Author: Dr. Luis Rodero-Merino (lrodero@acm.org)
+ */
 package org.lrodero.blueprintstests;
 
 import org.slf4j.Logger;
@@ -5,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.Vertex;
 
 public abstract class TestCommon {
@@ -17,6 +23,15 @@ public abstract class TestCommon {
     
     // The test itself! It only uses blueprints APIs
     public void runTest() {
+        try {
+            runGraphOps();
+        } catch(Exception e) {
+            logger.error("Caught exception when operating with graph", e);
+        }
+    }
+
+    
+    public void runGraphOps() {
         
         Graph g = createGraph();
         
@@ -60,11 +75,13 @@ public abstract class TestCommon {
             known += vertex.getProperty("name") + " ";
         logger.info(juno.getProperty("name") + " knows the following vertices since 2011 with 5 stars: " + known);
         
-        logger.info("Shutting down graph database");
-        
-        if(g instanceof TransactionalGraph)
+        /* Not needed as we are not using a transaction for our operations
+           if(g instanceof TransactionalGraph) {
+            logger.info("Graph is transactional, committing transaction");
             ((TransactionalGraph) g).commit();
+        }*/
         
+        logger.info("Shutting down graph database");
         g.shutdown();
     }
     

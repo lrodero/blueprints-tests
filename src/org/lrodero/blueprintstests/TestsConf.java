@@ -1,3 +1,10 @@
+/*
+ * Copyright Luis Rodero-Merino 2015
+ * 
+ * APACHE LICENSE v2.0
+ * 
+ * Author: Dr. Luis Rodero-Merino (lrodero@acm.org)
+ */
 package org.lrodero.blueprintstests;
 
 import java.io.File;

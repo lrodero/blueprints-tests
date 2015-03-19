@@ -1,3 +1,10 @@
+/*
+ * Copyright Luis Rodero-Merino 2015
+ * 
+ * APACHE LICENSE v2.0
+ * 
+ * Author: Dr. Luis Rodero-Merino (lrodero@acm.org)
+ */
 package org.lrodero.blueprintstests;
 
 import javax.naming.ConfigurationException;
@@ -96,6 +103,10 @@ public class Main {
             logger.info("Running distributed test");
             new TestDistributed().runTest();
         }
+        
+        logger.info("Test terminated");
+        
+        System.exit(0); // Aggressive, but required to terminate some pending threads... 
     }
     
     protected static TEST_TYPE readTestTypeConf() {
