@@ -18,12 +18,17 @@ public class TestLocal extends TestCommon {
     private static Logger logger = LoggerFactory.getLogger(TestLocal.class);
     private static final File LOCAL_GRAPHDB_DIR = new File("/tmp/graphdb");
     
-    public static void main(String[] args) {
-        new TestLocal().runTest();
-    }
+    protected static enum LOCAL_BACKEND_TECHNOLOGY_TYPE {BERKELEYDB, ORIENTDB, NEO4J};
+    protected static final String LOCAL_BACKEND_TECHNOLOGY_PARAMETER_NAME = "Local.Backend";
     
     @Override
     protected Graph createGraph() {
+        
+        LOCAL_BACKEND_TECHNOLOGY_TYPE backEndTech = readBackEndTechConf();
+        if(backEndTech == null) {
+            logger.error("Could not read back end technology from configuration, aborting");
+            return null;
+        }
         
         if(LOCAL_GRAPHDB_DIR.exists()) {
             logger.info("Removing previous graph database folder " + LOCAL_GRAPHDB_DIR.getAbsolutePath());
@@ -35,9 +40,34 @@ public class TestLocal extends TestCommon {
         }
         
         logger.info("Creating local graph database in folder " + LOCAL_GRAPHDB_DIR.getAbsolutePath());
-        return createLocalTitanGraph(LOCAL_GRAPHDB_DIR);
-        // return createLocalOrientDBGraph(LOCAL_GRAPHDB_DIR);
-        // return createLocalNeo4jGraph(LOCAL_GRAPHDB_DIR);
+        
+        if(backEndTech == LOCAL_BACKEND_TECHNOLOGY_TYPE.BERKELEYDB) {
+            logger.info("Using BerkeleyDB as local backend technology");
+            return createLocalTitanGraph(LOCAL_GRAPHDB_DIR);
+        } else if(backEndTech == LOCAL_BACKEND_TECHNOLOGY_TYPE.ORIENTDB) {
+            logger.info("Using OrientDB as local backend technology");
+            return createLocalOrientDBGraph(LOCAL_GRAPHDB_DIR);
+        } else {
+            logger.info("Using Neo4j as local backend technology");
+            return createLocalNeo4jGraph(LOCAL_GRAPHDB_DIR);
+        }
+    }
+    
+    protected static LOCAL_BACKEND_TECHNOLOGY_TYPE readBackEndTechConf() {
+
+        String backEndTechParam = TestsConf.readParameter(LOCAL_BACKEND_TECHNOLOGY_PARAMETER_NAME);
+        if(backEndTechParam == null)
+            return null;
+        
+        LOCAL_BACKEND_TECHNOLOGY_TYPE backEndTech = null;
+        try {
+            backEndTech = LOCAL_BACKEND_TECHNOLOGY_TYPE.valueOf(backEndTechParam.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            logger.error("'%s' property has not a valid value '%s', valid ones are: %s",
+                    LOCAL_BACKEND_TECHNOLOGY_PARAMETER_NAME, backEndTechParam, java.util.Arrays.toString(LOCAL_BACKEND_TECHNOLOGY_TYPE.values()));
+        }
+        
+        return backEndTech;
     }
     
     

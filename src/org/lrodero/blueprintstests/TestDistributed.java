@@ -12,15 +12,42 @@ import com.tinkerpop.blueprints.GraphFactory;
 public class TestDistributed extends TestCommon {
     
     private static Logger logger = LoggerFactory.getLogger(TestDistributed.class);
-    
-    public static void main(String[] args) {
-        new TestDistributed().runTest();
-    }
+
+    protected static enum REMOTE_BACKEND_TECHNOLOGY_TYPE {CASSANDRA, ORIENTDB};
+    protected static final String REMOTE_BACKEND_TECHNOLOGY_PARAMETER_NAME = "Remote.Backend";
     
     @Override
     protected Graph createGraph() {
-        // return createRemoteTitanCassandraGraph(DEFAULT_CASSANDRA_HOST, DEFAULT_CASSANDRA_PORT);
-        return createRemoteOrientDBGraph(DEFAULT_ORIENTDB_HOST, DEFAULT_ORIENTDB_PORT, DEFAULT_ORIENTDB_DBNAME, DEFAULT_ORIENTDB_USER, DEFAULT_ORIENTDB_PASSWORD);
+        REMOTE_BACKEND_TECHNOLOGY_TYPE backEndTech = readBackEndTechConf();
+        if(backEndTech == null) {
+            logger.error("Could not read back end technology from configuration, aborting");
+            return null;
+        }
+            
+        if(backEndTech == REMOTE_BACKEND_TECHNOLOGY_TYPE.CASSANDRA) {
+            logger.info("Using Cassandra as remote backend technology");
+            return createRemoteTitanCassandraGraph(DEFAULT_CASSANDRA_HOST, DEFAULT_CASSANDRA_PORT);
+        } else {
+            logger.info("Using OrientDB as remote backend technology");
+            return createRemoteOrientDBGraph(DEFAULT_ORIENTDB_HOST, DEFAULT_ORIENTDB_PORT, DEFAULT_ORIENTDB_DBNAME, DEFAULT_ORIENTDB_USER, DEFAULT_ORIENTDB_PASSWORD);
+        }
+    }
+    
+    protected static REMOTE_BACKEND_TECHNOLOGY_TYPE readBackEndTechConf() {
+
+        String backEndTechParam = TestsConf.readParameter(REMOTE_BACKEND_TECHNOLOGY_PARAMETER_NAME);
+        if(backEndTechParam == null)
+            return null;
+        
+        REMOTE_BACKEND_TECHNOLOGY_TYPE backEndTech = null;
+        try {
+            backEndTech = REMOTE_BACKEND_TECHNOLOGY_TYPE.valueOf(backEndTechParam.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            logger.error("'%s' property has not a valid value '%s', valid ones are: %s",
+                    REMOTE_BACKEND_TECHNOLOGY_PARAMETER_NAME, backEndTechParam, java.util.Arrays.toString(REMOTE_BACKEND_TECHNOLOGY_TYPE.values()));
+        }
+        
+        return backEndTech;
     }
     
     
