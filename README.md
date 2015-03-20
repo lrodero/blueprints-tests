@@ -1,6 +1,6 @@
 # README #
 
-This software is a small set of Java classes used to test three different graph database technologies (BerkeleyDB, OrientDB and Neo4J) as a backend for Titan GraphDB in local and distributed settings. The goal of this software is to detemine the proper configurations required by Titan to be run on different settings, and to check that those configurations indeed work.
+This software is a small set of Java classes used to test three different graph database technologies (BerkeleyDB, OrientDB, Cassandra and Neo4J) as a backend for Titan GraphDB in local and distributed settings. The goal of this software is to detemine the proper configurations required by Titan to be run on different settings, and to check that those configurations indeed work.
 
 ## Getting the code
 
@@ -35,7 +35,7 @@ $ mvn exec:java
 ``` 
 
 ## Testing Remote Backend Technologies
-To run a remote (distributed) test it is necessary to ensure that the remote backend technology is started, please read the subsections below to see how to start a [Cassandra backend](#cassandra) of a [OrientDB](#orientdb) backend.
+#To run a remote (distributed) test it is necessary to ensure that the remote backend technology is started, please read the subsections below to see how to start a [Cassandra backend](#cassandra) of a [OrientDB](#orientdb) backend.
 
 Once the remote backend server is ready, then it is necessary to edit `test.properties` so the `Test` parameter is set to `REMOTE` and set the `Remote.Backend` property to the corresponding backend technology, valid options are `CASSANDRA` and `ORIENTDB`. Example:
 ```properties
