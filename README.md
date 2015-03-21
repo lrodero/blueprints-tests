@@ -35,7 +35,7 @@ $ mvn exec:java
 ``` 
 
 ## Testing Remote Backend Technologies
-#To run a remote (distributed) test it is necessary to ensure that the remote backend technology is started, please read the subsections below to see how to start a [Cassandra backend](#cassandra) of a [OrientDB](#orientdb) backend.
+To run a remote (distributed) test it is necessary to ensure that the remote backend technology is started, please read the subsections below to see how to start a [Cassandra backend](#cassandra) of a [OrientDB](#orientdb) backend.
 
 Once the remote backend server is ready, then it is necessary to edit `test.properties` so the `Test` parameter is set to `REMOTE` and set the `Remote.Backend` property to the corresponding backend technology, valid options are `CASSANDRA` and `ORIENTDB`. Example:
 ```properties
